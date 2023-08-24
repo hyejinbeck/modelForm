@@ -24,6 +24,7 @@ def detail(request, id):
     return render(request, 'detail.html', context)
 
 def create(request): 
+    # board프로젝트의 create기능 
     # 사용자가 입력한 데이터를 DB에 저장 
     if request.method == 'POST': 
         form = ArticleForm(request.POST)
@@ -31,7 +32,14 @@ def create(request):
         if form.is_valid(): 
             article = form.save() 
             return redirect('articles:detail', id= article.id)
+        else: 
+            form = ArticleForm()
 
+            context= {
+                'form': form,
+            }
+            return render(request, 'create.html',context)
+    # board프로젝트의 new에 해당하는 기능 
     # 사용자가 데이터를 입력할 수 있도록, 빈 종이를 리턴 
     else: 
         form = ArticleForm()
